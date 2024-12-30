@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-spinner.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithPopup, 
+            GoogleAuthProvider,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
+        window.initFirebase = function() {
+            return { 
+                initializeApp, 
+                getAuth, 
+                signInWithPopup, 
+                GoogleAuthProvider,
+                onAuthStateChanged
+            };
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="auth-container" id="authContainer">
+            <h1>CodeAI Assistant</h1>
+            <div class="auth-buttons">
+                <button id="googleSignIn" class="google-btn">
+                    <img src="google-icon.png" alt="Google Icon">
+                    Sign in with Google
+                </button>
+            </div>
+            <div id="authError" class="auth-error hidden"></div>
+        </div>
+
+        <div class="main-container hidden" id="mainContainer">
+            <div class="sidebar">
+                <div class="Logo">
+                    <img src="diamonds-four-svgrepo-com.svg" alt="Logo">
+                </div>
+                <i data-feather="plus"></i>
+                <div class="icon-container">
+                    <i data-feather="search"></i>
+                    <i data-feather="folder"></i>
+                    <i data-feather="clock"></i>
+                    <i data-feather="settings"></i>
+                </div>
+                <div class="Avatar">
+                    <img src="https://via.placeholder.com/32" alt="Avatar">
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="header" id="header">
+                    Hi there, <span>Marwan</span>
+                </div>
+                <div class="sub-header" id="subHeader">
+                    What would you like to code?
+                </div>
+                <div class="prompt-description" id="promptDescription">
+                    Use one of the most common prompts below or use your own to begin
+                </div>
+                <div class="prompt-buttons" id="promptButtons">
+                    <div>Write a to-do list for a personal project or task</div>
+                    <div>Generate an email to reply to a job offer</div>
+                    <div>Summarise this article or text for me in one paragraph</div>
+                    <div>How does AI work in a technical capacity</div>
+                </div>
+                <div class="refresh-prompts" id="refreshPrompts">
+                    <i data-feather="refresh-cw"></i>
+                    Refresh Prompts
+                </div>
+                <div id="messages" class="messages"></div>
+                <div class="input-box">
+                    <textarea id="userInput" placeholder="Ask whatever you want..." rows="1" style="word-wrap: break-word; word-break: break-word; overflow-wrap: break-word;"></textarea>
+                    <div class="input-box-footer">
+                        <div class="input-actions">
+                            <button id="uploadButton">
+                                <i data-feather="paperclip"></i>
+                                Add Attachment
+                            </button>
+                            <button>
+                                <i data-feather="image"></i>
+                                Use Image
+                            </button>
+                        </div>
+                        <div class="right-actions">
+                            <span class="char-count">0/1000</span>
+                            <button id="sendButton" class="submit-button">
+                                <i data-feather="arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+    <script>
+        feather.replace();
+        
+        // Character count functionality
+        const textarea = document.querySelector('#userInput');
+        const charCount = document.querySelector('.char-count');
+        
+        textarea.addEventListener('input', () => {
+            const count = textarea.value.length;
+            charCount.textContent = `${count}/1000`;
+        });
+    </script>
+</body>
+</html>
